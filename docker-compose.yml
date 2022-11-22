@@ -1,0 +1,88 @@
+version: "3.8"
+
+services:
+  mirakc:
+    image: docker.io/mirakc/mirakc:alpine
+    container_name: mirakc
+    init: true
+    restart: unless-stopped
+    devices:
+      # PLEX PX-S1UD / PLEX PX-Q1UD
+      #- /dev/dvb/adapter0
+      #- /dev/dvb/adapter1
+      #- /dev/dvb/adapter2
+      #- /dev/dvb/adapter3
+      # PLEX PX-W3U4
+      - /dev/px4video0
+      - /dev/px4video1
+      - /dev/px4video2
+      - /dev/px4video3
+    ports:
+      - 40772:40772
+    volumes:
+      - type: bind
+        source: ./mirakc/config/config.yml
+        target: /etc/mirakc/config.yml
+        read_only: true
+      - type: volume
+        source: mirakc-epg
+        target: /var/lib/mirakc/epg
+    environment:
+      TZ: Asia/Tokyo
+      RUST_LOG: info
+
+  b25-server:
+    image: docker.io/collelog/b25-server:latest-alpine
+    container_name: b25-server
+    ports:
+      - 40773:40773
+      - 40774:40774
+    devices:
+      - /dev/bus/usb
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+
+  epgstation:
+    build:
+      context: ./epgstation
+      dockerfile: Dockerfile
+    container_name: epgstation
+    ports:
+      - 8888:8888
+    depends_on:
+      - mirakc
+    volumes:
+      - type: bind
+        source: ./epgstation/config/config.yml
+        target: /app/config/config.yml
+        read_only: true
+      - type: bind
+        source: ./epgstation/config/operatorLogConfig.yml
+        target: /app/config/operatorLogConfig.yml
+        read_only: true
+      - type: bind
+        source: ./epgstation/config/epgUpdaterLogConfig.yml
+        target: /app/config/epgUpdaterLogConfig.yml
+        read_only: true
+      - type: bind
+        source: ./epgstation/config/serviceLogConfig.yml
+        target: /app/config/serviceLogConfig.yml
+        read_only: true
+      - type: bind
+        source: ./epgstation/config/enc.js
+        target: /app/config/enc.js
+        read_only: true
+      - type: bind
+        source: /mnt/media/movie/recorded
+        target: /app/recorded
+    environment:
+      TZ: Asia/Tokyo
+
+
+volumes:
+  mirakc-epg:
+    name: mirakc_epg
+    driver: local
