@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mirakc:
-    image: docker.io/mirakc/mirakc:alpine
+    image: docker.io/mirakc/mirakc:2.0.0-alpine
     container_name: mirakc
     init: true
     restart: unless-stopped
@@ -27,6 +27,9 @@ services:
       - type: volume
         source: mirakc-epg
         target: /var/lib/mirakc/epg
+      - type: bind
+        source: /mnt/media/movie/recorded
+        target: /var/lib/mirakc/recording
     environment:
       TZ: Asia/Tokyo
       RUST_LOG: info
@@ -80,7 +83,6 @@ services:
         target: /app/recorded
     environment:
       TZ: Asia/Tokyo
-
 
 volumes:
   mirakc-epg:
