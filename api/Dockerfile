@@ -1,4 +1,4 @@
-FROM docker.io/denoland/deno:1.33.3
+FROM docker.io/lukechannings/deno:v1.33.3
 
 WORKDIR /src
 EXPOSE 3000
