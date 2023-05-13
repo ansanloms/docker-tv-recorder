@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mirakc:
-    image: docker.io/mirakc/mirakc:2.0.0-alpine
+    image: docker.io/mirakc/mirakc:2.1.11-alpine
     container_name: mirakc
     init: true
     restart: unless-stopped
@@ -35,7 +35,7 @@ services:
       RUST_LOG: info
 
   b25-server:
-    image: docker.io/collelog/b25-server:latest-alpine
+    image: docker.io/collelog/b25-server:latest-alpine-rpi4-64
     container_name: b25-server
     ports:
       - 40773:40773
