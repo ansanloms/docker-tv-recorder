@@ -23,6 +23,10 @@ services:
         source: ./mirakc/config/config.yml
         target: /etc/mirakc/config.yml
         read_only: true
+      - type: bind
+        source: ./mirakc/docs
+        target: /var/www/docs
+        read_only: true
       - type: volume
         source: mirakc-epg
         target: /var/lib/mirakc/epg
