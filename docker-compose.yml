@@ -27,7 +27,7 @@ services:
         source: mirakc-epg
         target: /var/lib/mirakc/epg
       - type: bind
-        source: /mnt/media/movie/recorded
+        source: "${RECORDING_DIR}"
         target: /var/lib/mirakc/recording
     environment:
       TZ: Asia/Tokyo
