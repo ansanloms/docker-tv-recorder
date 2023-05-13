@@ -1,6 +1,10 @@
 server:
   addrs:
     - http: "0.0.0.0:40772"
+  mounts:
+    /docs:
+      path: "/var/www/docs"
+      index: "index.html"
 
 channels:
   - name: ＮＨＫ総合
