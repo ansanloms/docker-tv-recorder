@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mirakc:
-    image: docker.io/mirakc/mirakc:2.1.11-alpine
+    image: docker.io/mirakc/mirakc:2.1.12-alpine
     container_name: mirakc
     init: true
     restart: unless-stopped
@@ -49,48 +49,15 @@ services:
         source: /etc/localtime
         target: /etc/localtime
         read_only: true
-  epgstation:
+  mirakc-ui:
     build:
-      context: ./epgstation
+      context: ./mirakc-ui
       dockerfile: Dockerfile
-    container_name: epgstation
+    container_name: mirakc-ui
     ports:
-      - 8888:8888
-    depends_on:
-      - mirakc
-    volumes:
-      - type: bind
-        source: ./epgstation/config/config.yml
-        target: /app/config/config.yml
-        read_only: true
-      - type: bind
-        source: ./epgstation/config/operatorLogConfig.yml
-        target: /app/config/operatorLogConfig.yml
-        read_only: true
-      - type: bind
-        source: ./epgstation/config/epgUpdaterLogConfig.yml
-        target: /app/config/epgUpdaterLogConfig.yml
-        read_only: true
-      - type: bind
-        source: ./epgstation/config/serviceLogConfig.yml
-        target: /app/config/serviceLogConfig.yml
-        read_only: true
-      - type: bind
-        source: ./epgstation/config/enc.js
-        target: /app/config/enc.js
-        read_only: true
-      - type: bind
-        source: /mnt/media/movie/recorded
-        target: /app/recorded
+      - 8888:8000
     environment:
-      TZ: Asia/Tokyo
-  api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    container_name: api
-    ports:
-      - 40775:3000
+      MIRAKC_API_URL: "http://mirakc:40772/api"
 volumes:
   mirakc-epg:
     name: mirakc_epg
