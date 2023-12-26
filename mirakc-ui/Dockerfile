@@ -1,4 +1,4 @@
-FROM docker.io/lukechannings/deno:v1.38.4
+FROM docker.io/lukechannings/deno:v1.39.1
 
 WORKDIR /app
 EXPOSE 8000
