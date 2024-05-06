@@ -1,8 +1,6 @@
-version: "3.8"
 services:
   mirakc:
-    image: docker.io/mirakc/mirakc:2.5.11-alpine
-    container_name: mirakc
+    image: docker.io/mirakc/mirakc:3.1.10-alpine
     init: true
     restart: unless-stopped
     devices:
@@ -31,14 +29,13 @@ services:
         source: mirakc-epg
         target: /var/lib/mirakc/epg
       - type: bind
-        source: "${RECORDING_DIR}"
+        source: ${RECORDING_DIR}
         target: /var/lib/mirakc/recording
     environment:
       TZ: Asia/Tokyo
       RUST_LOG: info
   b25-server:
     image: docker.io/collelog/b25-server:latest-alpine-rpi4-64
-    container_name: b25-server
     ports:
       - 40773:40773
       - 40774:40774
@@ -53,11 +50,10 @@ services:
     build:
       context: ./mirakc-ui
       dockerfile: Dockerfile
-    container_name: mirakc-ui
     ports:
       - 8888:8000
     environment:
-      MIRAKC_API_URL: "http://mirakc:40772/api"
+      MIRAKC_API_URL: http://mirakc:40772/api
 volumes:
   mirakc-epg:
     name: mirakc_epg
