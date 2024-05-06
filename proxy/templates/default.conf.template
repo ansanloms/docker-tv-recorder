@@ -1,0 +1,18 @@
+server {
+    listen 80;
+    server_name localhost;
+
+    root /usr/local/www/;
+
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Server $host;
+    proxy_set_header X-Forwarded-Host $host:$server_port;
+
+    location /mirakc-ui {
+        proxy_pass http://mirakc-ui:8000;
+        rewrite ^/mirakc-ui/(.*)$ /$1 break;
+    }
+}
