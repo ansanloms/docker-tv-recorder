@@ -1,10 +1,7 @@
 name: tv-recorder
 services:
   proxy:
-    image: docker.io/nginx:1.25.4
-    profiles:
-      - vanilla
-      - paper
+    image: docker.io/nginx:1.25.5
     ports:
       - 80:80
     volumes:
