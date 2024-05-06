@@ -13,6 +13,5 @@ server {
 
     location /mirakc-ui {
         proxy_pass http://mirakc-ui:8000;
-        rewrite ^/mirakc-ui/(.*)$ /$1 break;
     }
 }
