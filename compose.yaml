@@ -62,7 +62,7 @@ services:
       dockerfile: Dockerfile
     environment:
       MIRAKC_API_URL: http://mirakc:40772/api
-      BASE_URL: /mirakc-ui
+      BASE_PATH: /mirakc-ui
 volumes:
   mirakc-epg:
     name: mirakc_epg
