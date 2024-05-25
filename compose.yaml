@@ -1,7 +1,7 @@
 name: tv-recorder
 services:
   proxy:
-    image: docker.io/nginx:1.25.5
+    image: docker.io/nginx:1.26.0
     ports:
       - 80:80
       - 443:443
@@ -15,7 +15,7 @@ services:
         target: /etc/nginx/templates/default.conf.template
         read_only: true
   mirakc:
-    image: docker.io/mirakc/mirakc:3.1.10-alpine
+    image: docker.io/mirakc/mirakc:3.1.13-alpine
     init: true
     restart: unless-stopped
     devices:
