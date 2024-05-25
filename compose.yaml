@@ -61,13 +61,14 @@ services:
         source: /etc/localtime
         target: /etc/localtime
         read_only: true
-      - type: bind
-        source: ./mirakc-ui/data
-        target: /app/data
   mirakc-ui:
     build:
       context: ./mirakc-ui
       dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./mirakc-ui/data
+        target: /app/data
     environment:
       MIRAKC_API_URL: http://mirakc:40772/api
       BASE_PATH: /mirakc-ui
