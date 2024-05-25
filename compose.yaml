@@ -4,7 +4,12 @@ services:
     image: docker.io/nginx:1.25.5
     ports:
       - 80:80
+      - 443:443
     volumes:
+      - type: bind
+        source: ./proxy/certs
+        target: /etc/certs
+        read_only: true
       - type: bind
         source: ./proxy/templates/default.conf.template
         target: /etc/nginx/templates/default.conf.template

@@ -1,5 +1,10 @@
 server {
-    listen 80;
+    listen 80 default;
+
+    listen 443 ssl;
+    ssl_certificate /etc/certs/cert.pem;
+    ssl_certificate_key /etc/certs/key.pem;
+
     server_name localhost;
 
     root /usr/local/www/;
