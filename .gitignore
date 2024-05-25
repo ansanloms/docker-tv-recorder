@@ -1,2 +1,4 @@
 .env
 proxy/certs
+mirakc-ui/data/*
+!mirakc-ui/data/.gitkeep
