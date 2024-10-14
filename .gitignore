@@ -1,5 +1,3 @@
 .env
-proxy/certs/*
-!proxy/certs/.gitkeep
-mirakc-ui/data/*
-!mirakc-ui/data/.gitkeep
+ui/data/*
+!ui/data/.gitkeep

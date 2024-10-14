@@ -1,19 +1,5 @@
 name: tv-recorder
 services:
-  proxy:
-    image: docker.io/nginx:1.27.2
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - type: bind
-        source: ./proxy/certs
-        target: /etc/certs
-        read_only: true
-      - type: bind
-        source: ./proxy/templates/default.conf.template
-        target: /etc/nginx/templates/default.conf.template
-        read_only: true
   mirakc:
     image: docker.io/mirakc/mirakc:3.2.9-alpine
     init: true
@@ -61,13 +47,15 @@ services:
         source: /etc/localtime
         target: /etc/localtime
         read_only: true
-  mirakc-ui:
+  ui:
     build:
-      context: ./mirakc-ui
+      context: ./ui
       dockerfile: Dockerfile
+    ports:
+      - ${UI_PORT:-5000}:8000
     volumes:
       - type: bind
-        source: ./mirakc-ui/data
+        source: ./ui/data
         target: /app/data
     environment:
       MIRAKC_API_URL: http://mirakc:40772/api
