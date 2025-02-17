@@ -1,4 +1,4 @@
-FROM docker.io/denoland/deno:2.1.7
+FROM docker.io/denoland/deno:2.1.10
 
 WORKDIR /app
 ARG VERSION
