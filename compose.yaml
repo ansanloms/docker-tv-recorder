@@ -1,7 +1,7 @@
 name: tv-recorder
 services:
   mirakc:
-    image: docker.io/mirakc/mirakc:3.4.16-alpine
+    image: docker.io/mirakc/mirakc:3.4.57-alpine
     init: true
     restart: unless-stopped
     devices:
@@ -49,23 +49,11 @@ services:
         target: /etc/localtime
         read_only: true
   ui:
-    build:
-      context: ./ui
-      dockerfile: Dockerfile
-      args:
-        VERSION: ${UI_VERSION:-0.5.12}
-    restart: unless-stopped
+    image: ghcr.io/ansanloms/mirakc-ui:v2.0.1
     ports:
       - ${UI_PORT:-5000}:8000
-    volumes:
-      - type: bind
-        source: ./ui/data
-        target: /app/data
     environment:
       MIRAKC_API_URL: http://mirakc:40772/api
-      BASE_PATH: /mirakc-ui
-      KV_FILEPATH: /app/data/kv.sqlite
-      VAPID_SUBJECT: ${VAPID_SUBJECT}
 volumes:
   mirakc-epg:
     name: mirakc_epg
