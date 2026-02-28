@@ -1,8 +1,7 @@
 name: tv-recorder
 services:
   mirakc:
-    build:
-      context: ./mirakc
+    image: docker.io/mirakc/mirakc:3.4.58-alpine
     init: true
     restart: unless-stopped
     devices:
