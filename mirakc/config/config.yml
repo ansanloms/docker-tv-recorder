@@ -85,5 +85,20 @@ filters:
     command: >-
       socat - tcp-connect:b25-server:40773
 
+    post-filters:
+      transcode:
+        command: >-
+          ffmpeg
+          -i pipe:0
+          -c:v libx264
+          -preset ultrafast
+          -tune zerolatency
+          -b:v 1500k
+          -c:a aac
+          -b:a 192k
+          -f mpegts
+          pipe:1
+        content-type: video/mp2t
+
 recording:
   basedir: /var/lib/mirakc/recording
