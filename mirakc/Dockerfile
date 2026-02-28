@@ -1,4 +1,4 @@
-FROM docker.io/mirakc/mirakc:3.4.57-alpine
+FROM docker.io/mirakc/mirakc:3.4.58-debian
 
 RUN <<EOF
 apt-get update -yq
