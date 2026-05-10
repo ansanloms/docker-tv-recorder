@@ -1,7 +1,7 @@
 name: tv-recorder
 services:
   mirakc:
-    image: docker.io/mirakc/mirakc:3.4.58-alpine
+    image: docker.io/mirakc/mirakc:3.4.67-alpine
     init: true
     restart: unless-stopped
     devices:
@@ -48,12 +48,25 @@ services:
         source: /etc/localtime
         target: /etc/localtime
         read_only: true
+  transcoder:
+    build: ./transcoder
+    init: true
+    restart: unless-stopped
+    # Pi 4 等で h264_v4l2m2m を使う場合は以下のデバイスをホスト環境に合わせて pass-through する
+    #devices:
+    #  - /dev/video10
+    #  - /dev/video11
+    #  - /dev/video12
+    environment:
+      MIRAKC_API_URL: http://mirakc:40772/api
+      LISTEN_PORT: "8001"
   ui:
-    image: ghcr.io/ansanloms/mirakc-ui:0.6.0
+    image: ghcr.io/ansanloms/mirakc-ui:0.6.1
     ports:
       - ${UI_PORT:-5000}:8000
     environment:
       MIRAKC_API_URL: http://mirakc:40772/api
+      MIRAKC_TRANSCODE_API_URL: http://transcoder:8001
 volumes:
   mirakc-epg:
     name: mirakc_epg
