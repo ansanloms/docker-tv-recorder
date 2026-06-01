@@ -49,7 +49,7 @@ services:
         target: /etc/localtime
         read_only: true
   ui:
-    image: ghcr.io/ansanloms/mirakc-ui:0.7.0
+    image: ghcr.io/ansanloms/mirakc-ui:0.7.1
     ports:
       - ${UI_PORT:-5000}:8000
     environment:
