@@ -49,11 +49,13 @@ services:
         target: /etc/localtime
         read_only: true
   ui:
-    image: ghcr.io/ansanloms/mirakc-ui:0.8.0
+    image: ghcr.io/ansanloms/mirakc-ui:0.9.0
     ports:
       - ${UI_PORT:-5000}:8000
+    volumes:
+      - ./ui/data:/app/data
     environment:
-      MIRAKC_API_URL: http://mirakc:40772/api
+      MIRAKC_URL: http://mirakc:40772
 volumes:
   mirakc-epg:
     name: mirakc_epg
