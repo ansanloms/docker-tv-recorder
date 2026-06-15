@@ -1,7 +1,7 @@
 name: tv-recorder
 services:
   mirakc:
-    image: docker.io/mirakc/mirakc:3.4.71-alpine
+    image: docker.io/mirakc/mirakc:3.4.72-alpine
     init: true
     restart: unless-stopped
     devices:
@@ -49,11 +49,13 @@ services:
         target: /etc/localtime
         read_only: true
   ui:
-    image: ghcr.io/ansanloms/mirakc-ui:0.9.0
+    image: ghcr.io/ansanloms/mirakc-ui:0.10.0
     ports:
       - ${UI_PORT:-5000}:8000
     volumes:
-      - ./ui/data:/app/data
+      - type: bind
+        source: ./ui/data
+        target: /app/data
     environment:
       MIRAKC_URL: http://mirakc:40772
 volumes:
